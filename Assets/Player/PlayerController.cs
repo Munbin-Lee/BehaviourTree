@@ -4,32 +4,34 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
-        private Rigidbody2D rb;
-        private Animator anim;
-        private SpriteRenderer sprite;
+        private Rigidbody2D _rigidbody2D;
+        private Animator _animator;
+        private SpriteRenderer _spriteRenderer;
         
-        private Vector2 movementDirection;
-        private static readonly int IsStand = Animator.StringToHash("isStand");
+        [SerializeField] private float _speed;
+        private Vector2 _force;
 
-        void Start()
+        private void Start()
         {
-            rb = GetComponent<Rigidbody2D>();
-            anim = GetComponent<Animator>();
-            sprite = GetComponent<SpriteRenderer>();
+            _rigidbody2D = GetComponent<Rigidbody2D>();
+            _animator = GetComponent<Animator>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        void Update()
+        private void Update()
         {
             var h = Input.GetAxisRaw("Horizontal");
-            anim.SetBool(IsStand, h == 0);
-            sprite.flipX = h switch
+            if (h == 0)
             {
-                < 0 => false,
-                > 0 => true,
-                _ => sprite.flipX
-            };
-            movementDirection.x = h * 5;
-            rb.velocity = movementDirection;
+                _animator.Play("Stand");
+            }
+            else
+            {
+                _spriteRenderer.flipX = h > 0;
+                _animator.Play("Walk");
+                _force.x = h * _speed;
+                _rigidbody2D.AddForce(_force);
+            }
         }
     }
 }
