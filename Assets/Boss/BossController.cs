@@ -64,15 +64,13 @@ namespace Boss
 
         public void Attack1()
         {
-            if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == _attack1) return;
-            if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == _attack2) return;
+            if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name is _attack1 or _attack2) return;
             ChangeState(_attack1);
         }
 
         public void Attack2()
         {
-            if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == _attack1) return;
-            if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == _attack2) return;
+            if (_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name is _attack1 or _attack2) return;
             ChangeState(_attack2);
         }
 
